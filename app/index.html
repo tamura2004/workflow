@@ -1,0 +1,141 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/bootstrap.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="wfApp">
+  <div class="container-fluid"ng-controller="MainCtrl">
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="components/es5-shim/es5-shim.js"></script>
+<script src="components/json3/lib/json3.min.js"></script>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+    <div class="row-fluid">
+      <div class="span2">
+        <h1>集計</h1>
+        <table ng-class="table()">
+          <thead>
+            <tr>
+              <th>状態</th>
+              <th>件数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="t in total()"
+                ng-click="setState(t.state)"
+                ng-class={"active":t.flag}>
+
+              <td>{{t.state}}</td>
+              <td>{{t.num}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="span10">
+
+        <h1>債権一覧（{{subtitle()}}）</h1>
+        <table ng-class="table()">
+          <thead>
+            <tr>
+              <th>債権番号</th>
+              <th>主状態</th>
+              <th>副状態</th>
+              <th>担当部署</th>
+              <th>一次入力</th>
+              <th>書類仕分</th>
+              <th>二次入力</th>
+              <th>審査受付</th>
+              <th>決裁登録</th>
+              <th>結果確認</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="claim in claims()|filter:query()"
+                ng-click="setClaim(claim)"
+                ng-class={"active":claim.flag}>
+
+              <td>{{claim.id}}</td>
+              <td>{{claim.main}}</td>
+              <td>{{claim.sub}}</td>
+              <td></td>
+              <td>{{claim["一次入力"]}}</td>
+              <td>{{claim["書類仕訳"]}}</td>
+              <td>{{claim["二次入力"]}}</td>
+              <td>{{claim["審査受付"]}}</td>
+              <td>{{claim["決裁登録"]}}</td>
+              <td>{{claim["結果確認"]}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div ng-show="current_claim.id">
+          <h1>債権明細（ID={{current_claim.id}}）</h1>
+          <table ng-class="table()">
+            <thead>
+              <tr>
+                <th>債権番号</th>
+                <th>主状態</th>
+                <th>副状態</th>
+                <th>担当部署</th>
+                <td ng-class="isCurrentMain('一次入力')">一次入力</td>
+                <td ng-class="isCurrentMain('書類仕訳')">書類仕訳</td>
+                <td ng-class="isCurrentMain('二次入力')">二次入力</td>
+                <td ng-class="isCurrentMain('審査受付')">審査受付</td>
+                <td ng-class="isCurrentMain('決裁登録')">決裁登録</td>
+                <td ng-class="isCurrentMain('結果確認')">結果確認</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{current_claim.id}}</td>
+                <td>{{current_claim.main}}</td>
+                <td>{{current_claim.sub}}</td>
+                <td></td>
+                <td ng-class="isCurrentMain('一次入力')">{{current_claim["一次入力"]}}</td>
+                <td ng-class="isCurrentMain('書類仕訳')">{{current_claim["書類仕訳"]}}</td>
+                <td ng-class="isCurrentMain('二次入力')">{{current_claim["二次入力"]}}</td>
+                <td ng-class="isCurrentMain('審査受付')">{{current_claim["審査受付"]}}</td>
+                <td ng-class="isCurrentMain('決裁登録')">{{current_claim["決裁登録"]}}</td>
+                <td ng-class="isCurrentMain('結果確認')">{{current_claim["結果確認"]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <span class="btn btn-primary btn-large"
+              ng-repeat="button in buttons()"
+              ng-click="action(button)"
+              ng-class="btnClass(button)">{{button}}</span>
+
+      </div>
+    </div>
+  </div>
+  <script src="components/angular/angular.js"></script>
+
+  <!-- build:js scripts/scripts.js -->
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/services/rules.js"></script>
+  <script src="scripts/services/claims.js"></script>
+  <!-- endbuild -->
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+</body>
+</html>

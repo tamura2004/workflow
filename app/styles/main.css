@@ -1,0 +1,28 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+
+
+h1 {
+	color: #08c;
+	border-bottom: solid 1px #08c;
+	border-left: solid 8px #08c;
+	padding-left: 8px;
+}
+
+
+tbody > tr:hover {
+	background-color: #eee;
+}
+
+.active:hover {
+	background-color: #08c;
+	color:white;
+}
+
+.active {
+	background-color: #08c;
+	color:white;
+}
+
+.btn {
+	margin-right: 8px;
+}
